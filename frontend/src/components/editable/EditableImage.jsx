@@ -6,7 +6,7 @@ import { useContent } from "../../context/ContentContext";
 
 function resolve(src) {
   if (!src) return src;
-  return src.startsWith("/api/") ? `${API}${src.replace(/^\/api/, "")}` : src;
+  return src.startsWith("/api/") ? `${API.replace(/\/api\/?$/, "")}${src}` : src;
 }
 
 // Editable image. In edit mode shows an overlay button to upload a replacement.
