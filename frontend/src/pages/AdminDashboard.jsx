@@ -9,6 +9,7 @@ import api, { API } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import VideoBackgroundSettings from "../components/admin/VideoBackgroundSettings";
 import AllImagesSettings from "../components/admin/AllImagesSettings";
+import { resolveSiteImage } from "../components/SiteImage";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import {
@@ -267,7 +268,7 @@ export default function AdminDashboard() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   {gallery.map((g) => (
                     <div key={g.id} className="group relative overflow-hidden rounded-2xl border border-white/10">
-                      <img src={`${API}${g.url}`} alt={g.title} className="h-48 w-full object-cover" />
+                      <img src={resolveSiteImage(g.url)} alt={g.title} className="h-48 w-full object-cover" />
                       <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#0a0a0b]/90 via-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
                         <div className="flex justify-end">
                           <button onClick={() => delGallery(g.id)} className="flex h-9 w-9 items-center justify-center rounded-md bg-black/50 text-white transition-colors hover:bg-red-500">
