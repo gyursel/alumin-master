@@ -8,6 +8,7 @@ import {
 import api, { API } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import VideoBackgroundSettings from "../components/admin/VideoBackgroundSettings";
+import AllImagesSettings from "../components/admin/AllImagesSettings";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import {
@@ -169,6 +170,7 @@ export default function AdminDashboard() {
             {tabBtn("inquiries", "Запитвания", Inbox, inquiries.length)}
             {tabBtn("gallery", "Галерия", ImageIcon, gallery.length)}
             {tabBtn("video", "Видео фон", Video)}
+            {tabBtn("images", "Всички снимки", ImageIcon)}
           </div>
           <a href="/?edit=1" className="btn-gold flex items-center gap-2 rounded-md px-4 py-2 text-sm sm:hidden">
             <Palette className="h-4 w-4" /> Редактирай сайта
@@ -212,6 +214,8 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
+        ) : tab === "images" ? (
+          <AllImagesSettings />
         ) : tab === "video" ? (
           <div className="mt-8">
             <VideoBackgroundSettings />
