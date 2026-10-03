@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.dogramadobrich.com/</loc><lastmod>2026-10-01</lastmod></url>
-  <url><loc>https://www.dogramadobrich.com/products</loc><lastmod>2026-10-01</lastmod></url>
-  <url><loc>https://www.dogramadobrich.com/about</loc><lastmod>2026-10-01</lastmod></url>
-  <url><loc>https://www.dogramadobrich.com/gallery</loc><lastmod>2026-10-01</lastmod></url>
-  <url><loc>https://www.dogramadobrich.com/contact</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://www.dogramadobrich.com/</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products/windows</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products/doors</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products/used-joinery</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products/sliding</loc></url>
+  <url><loc>https://www.dogramadobrich.com/products/shutters</loc></url>
+  <url><loc>https://www.dogramadobrich.com/about</loc></url>
+  <url><loc>https://www.dogramadobrich.com/gallery</loc></url>
+  <url><loc>https://www.dogramadobrich.com/contact</loc></url>
 </urlset>
