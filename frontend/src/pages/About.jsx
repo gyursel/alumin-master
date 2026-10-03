@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Gem, Clock, MessagesSquare, LifeBuoy, ArrowRight } from "lucide-react";
 import Reveal from "../components/Reveal";
+import SiteImage from "../components/SiteImage";
 import { aboutImages, values, stats, brands } from "../mock";
 
 const iconMap = { Gem, Clock, MessagesSquare, LifeBuoy };
@@ -46,9 +47,9 @@ export default function About() {
           </Reveal>
           <Reveal delay={150}>
             <div className="grid grid-cols-2 gap-4">
-              <img src={aboutImages.main} alt="За нас" className="col-span-2 h-64 w-full rounded-2xl border border-white/10 object-cover" />
-              <img src={aboutImages.workshop} alt="Производство" className="h-44 w-full rounded-2xl border border-white/10 object-cover" />
-              <img src={aboutImages.fabrication} alt="Обработка" className="h-44 w-full rounded-2xl border border-white/10 object-cover" />
+              <SiteImage slot="about_main" fallback={aboutImages.main} alt="За нас" className="col-span-2 h-64 w-full rounded-2xl border border-white/10 object-cover" />
+              <SiteImage slot="about_workshop" fallback={aboutImages.workshop} alt="Производство" className="h-44 w-full rounded-2xl border border-white/10 object-cover" />
+              <SiteImage slot="about_fabrication" fallback={aboutImages.fabrication} alt="Обработка" className="h-44 w-full rounded-2xl border border-white/10 object-cover" />
             </div>
           </Reveal>
         </div>

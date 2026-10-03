@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import Reveal from "../components/Reveal";
+import SiteImage from "../components/SiteImage";
 import { products } from "../mock";
 
 export default function Products() {
@@ -33,8 +34,8 @@ export default function Products() {
                 }`}
               >
                 <div className="group relative overflow-hidden rounded-2xl border border-white/10">
-                  <img
-                    src={p.image}
+                  <SiteImage
+                    slot={"product_"+p.slug} fallback={p.image}
                     alt={p.title}
                     className="h-[420px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

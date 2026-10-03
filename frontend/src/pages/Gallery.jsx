@@ -3,13 +3,17 @@ import { X } from "lucide-react";
 import Reveal from "../components/Reveal";
 import { galleryImages } from "../mock";
 import api, { API } from "../lib/api";
+import { useContent } from "../context/ContentContext";
+import { imageUrl } from "../lib/siteImages";
+import { resolveSiteImage } from "../components/SiteImage";
 
 const categories = ["Всички", "Прозорци", "Врати", "Плъзгащи"];
 
 export default function Gallery() {
+  const {content}=useContent();
   const [filter, setFilter] = useState("Всички");
   const [active, setActive] = useState(null);
-  const [items, setItems] = useState(galleryImages);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -22,7 +26,7 @@ export default function Gallery() {
           title: g.title,
           category: g.category,
         }));
-        setItems([...uploaded, ...galleryImages]);
+        setItems(uploaded);
       })
       .catch(() => {});
     return () => {
@@ -30,7 +34,7 @@ export default function Gallery() {
     };
   }, []);
 
-  const gallerySource = items;
+  const gallerySource = [...items, ...galleryImages.map((g,i)=>({...g,src:resolveSiteImage(imageUrl(content,"gallery_"+i,g.src))}))];
 
   const filtered =
     filter === "Всички"
