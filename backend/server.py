@@ -611,7 +611,7 @@ async def get_media(media_id: str, request: Request):
             while len(_VIDEO_CACHE) >= _VIDEO_CACHE_MAX:
                 _VIDEO_CACHE.pop(next(iter(_VIDEO_CACHE)))
             _VIDEO_CACHE[media_id] = (media_type, data)
-    headers = {"Cache-Control": "public, max-age=86400", "Accept-Ranges": "bytes"}
+    headers = {"Cache-Control": "public, max-age=2592000, immutable", "Accept-Ranges": "bytes", "X-Content-Type-Options": "nosniff"}
 
     # Range заявки (нужни за възпроизвеждане на видео в Safari/iOS)
     rng = request.headers.get("range")
