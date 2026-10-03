@@ -22,7 +22,7 @@ export default function Gallery() {
       .then((res) => {
         if (!mounted) return;
         const uploaded = (res.data || []).map((g) => ({
-          src: `${API}${g.url}`,
+          src: resolveSiteImage(g.url),
           title: g.title,
           category: g.category,
         }));
