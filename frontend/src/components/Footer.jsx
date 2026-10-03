@@ -18,7 +18,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/55">
-              Производство и монтаж на алуминиева дограма с европейско качество и 10-годишна гаранция.
+              Производство и монтаж на алуминиева дограма с европейско качество и 3-годишна гаранция.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {brands.map((b) => (
