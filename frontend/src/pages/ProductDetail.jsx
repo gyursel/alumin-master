@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Reveal from "../components/Reveal";
+import SiteImage from "../components/SiteImage";
 import { products } from "../mock";
 
 export default function ProductDetail() {
@@ -23,7 +24,7 @@ export default function ProductDetail() {
     <main className="overflow-hidden pt-24">
       {/* Hero */}
       <section className="relative min-h-[62vh] overflow-hidden">
-        <img src={product.image} alt={product.title} className="absolute inset-0 h-full w-full object-cover" />
+        <SiteImage slot={"product_"+product.slug} fallback={product.image} alt={product.title} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/70 to-[#0a0a0b]/40" />
         <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-14 pt-32 lg:px-8">
           <Link
@@ -93,8 +94,8 @@ export default function ProductDetail() {
                   className="card-hover group block overflow-hidden rounded-2xl border border-white/10 bg-[#121214]"
                 >
                   <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={p.image}
+                    <SiteImage
+                      slot={"product_"+p.slug} fallback={p.image}
                       alt={p.title}
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
