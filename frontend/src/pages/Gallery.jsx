@@ -5,7 +5,7 @@ import { galleryImages } from "../mock";
 import api, { API } from "../lib/api";
 import { useContent } from "../context/ContentContext";
 import { imageUrl } from "../lib/siteImages";
-import { resolveSiteImage } from "../components/SiteImage";
+import { resolveSiteImage, responsiveImageSet } from "../components/SiteImage";
 
 const categories = ["Всички", "Прозорци", "Врати", "Плъзгащи"];
 
@@ -88,6 +88,8 @@ export default function Gallery() {
                   <img
                     loading="lazy"
                     decoding="async"
+                    srcSet={responsiveImageSet(g.src)}
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 360px"
                     src={g.src}
                     alt={g.title}
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
