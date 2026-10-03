@@ -21,6 +21,7 @@ export default function HeroBackdrop({ loaded, src, fallbackSrc }) {
         <EditableImage
           src={src}
           path="sections.hero.image"
+          priority
           alt="Алуминиева фасада"
           className="h-full w-full object-cover"
         />
