@@ -11,6 +11,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Reveal from "../components/Reveal";
+import SiteImage from "../components/SiteImage";
 import { useContent } from "../context/ContentContext";
 import EditableText from "../components/editable/EditableText";
 import EditableImage from "../components/editable/EditableImage";
@@ -182,7 +183,7 @@ export default function Home() {
                   className="card-hover group block overflow-hidden rounded-2xl border border-white/10 bg-[#121214]"
                 >
                   <div className="relative h-56 overflow-hidden">
-                    <img src={p.image} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <SiteImage slot={"product_"+p.slug} fallback={p.image} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent" />
                   </div>
                   <div className="p-6">
