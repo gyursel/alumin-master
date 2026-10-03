@@ -86,6 +86,8 @@ export default function Gallery() {
               >
                 <div className="relative">
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src={g.src}
                     alt={g.title}
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-105"

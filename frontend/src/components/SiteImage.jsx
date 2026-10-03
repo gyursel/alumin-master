@@ -11,5 +11,5 @@ export function resolveSiteImage(url) {
 }
 export default function SiteImage({slot, fallback, alt="", className=""}) {
   const {content}=useContent();
-  return <img src={resolveSiteImage(imageUrl(content,slot,fallback))} alt={alt} className={className} />;
+  return <img src={resolveSiteImage(imageUrl(content,slot,fallback))} alt={alt} className={className} loading={slot==="hero" ? "eager" : "lazy"} decoding="async" />;
 }
