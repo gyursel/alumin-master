@@ -40,7 +40,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`site-header fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? "bg-[#0a0a0b]/85 backdrop-blur-xl border-b border-white/10 py-3"
           : "bg-transparent py-5"
@@ -129,7 +129,7 @@ export default function Navbar() {
                 <Menu className="h-5 w-5" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] border-l border-white/10 bg-[#0a0a0b] p-0 text-white">
+            <SheetContent side="right" className="public-mobile-menu w-[300px] border-l border-white/10 bg-[#0a0a0b] p-0 text-white">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
                 <Logo />
                 <button onClick={() => setOpen(false)} className="text-white/70">

@@ -86,9 +86,9 @@ export default function Home() {
   const cta = sec("cta");
 
   return (
-    <main className="overflow-hidden">
+    <main className="home-page overflow-hidden">
       {/* HERO */}
-      <section className="relative flex min-h-screen items-center">
+      <section className="home-hero relative flex min-h-screen items-center">
         <div className="absolute inset-0">
           <HeroBackdrop loaded={loaded} src={hero.image} fallbackSrc={DEFAULTS.hero.image} />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/85 to-[#0a0a0b]/40" />
@@ -139,7 +139,7 @@ export default function Home() {
 
       {/* STATS */}
       <SectionWrap path="sections.stats" visible={stats.visible} label="Статистики">
-        <section className="border-y border-white/10 bg-[#0e0e10]">
+        <section className="stats-strip border-y border-white/10 bg-[#0e0e10]">
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-10 px-5 py-14 lg:grid-cols-4 lg:px-8">
             {(stats.items || mockStats).map((s, i) => (
               <Reveal key={i} delay={i * 80} className="text-center">
