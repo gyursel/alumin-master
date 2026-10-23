@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import Reveal from "../components/Reveal";
 import { galleryImages } from "../mock";
-import api, { API } from "../lib/api";
+import api from "../lib/api";
 import { useContent } from "../context/ContentContext";
 import { imageUrl } from "../lib/siteImages";
 import { resolveSiteImage, responsiveImageSet } from "../components/SiteImage";
@@ -10,7 +10,7 @@ import { resolveSiteImage, responsiveImageSet } from "../components/SiteImage";
 const categories = ["Всички", "Прозорци", "Врати", "Плъзгащи"];
 
 export default function Gallery() {
-  const {content}=useContent();
+  const { content } = useContent();
   const [filter, setFilter] = useState("Всички");
   const [active, setActive] = useState(null);
   const [items, setItems] = useState([]);
@@ -34,7 +34,22 @@ export default function Gallery() {
     };
   }, []);
 
-  const gallerySource = [...items, ...galleryImages.map((g,i)=>({...g,src:resolveSiteImage(imageUrl(content,"gallery_"+i,g.src))}))];
+  useEffect(() => {
+    if (!active) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setActive(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [active]);
+
+  const gallerySource = [
+    ...items,
+    ...galleryImages.map((g, i) => ({
+      ...g,
+      src: resolveSiteImage(imageUrl(content, "gallery_" + i, g.src)),
+    })),
+  ];
 
   const filtered =
     filter === "Всички"
@@ -42,15 +57,17 @@ export default function Gallery() {
       : gallerySource.filter((g) => g.category === filter);
 
   return (
-    <main className="overflow-hidden pt-24">
-      <section className="border-b border-white/10 bg-[#0e0e10]">
-        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+    <main className="overflow-hidden pt-20">
+      {/* Header */}
+      <section className="arch-grid-bg relative overflow-hidden border-b border-white/10 bg-[#0e0e11]">
+        <div className="pointer-events-none absolute -top-24 right-1/3 h-72 w-72 rounded-full bg-gold/10 blur-[120px]" />
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:py-24 lg:px-8">
           <Reveal className="max-w-3xl">
             <span className="section-eyebrow">Галерия</span>
-            <h1 className="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 font-display text-fluid-h1 font-extrabold tracking-tight text-white">
               Реализирани проекти
             </h1>
-            <p className="mt-5 text-lg text-white/60">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/65 sm:text-lg">
               Избрани обекти от нашето портфолио — жилищни, търговски
               и административни сгради.
             </p>
@@ -58,22 +75,28 @@ export default function Gallery() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+      <section className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8">
         {/* Filters */}
-        <div className="flex flex-wrap gap-3">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setFilter(c)}
-              className={`rounded-full border px-5 py-2 text-sm font-medium transition-all ${
-                filter === c
-                  ? "border-gold bg-gold text-[#0a0a0b]"
-                  : "border-white/15 text-white/70 hover:border-white/40 hover:text-white"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-2.5 sm:gap-3" role="tablist" aria-label="Категории проекти">
+          {categories.map((c) => {
+            const isSelected = filter === c;
+            return (
+              <button
+                key={c}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => setFilter(c)}
+                className={`min-h-[44px] rounded-full border px-5 py-2.5 text-sm font-semibold transition-all ${
+                  isSelected
+                    ? "border-gold bg-gold text-[#0a0a0b] shadow-[0_6px_22px_rgba(201,161,90,0.3)]"
+                    : "glass-pill text-white/75 hover:border-gold/45 hover:text-white"
+                }`}
+              >
+                {c}
+              </button>
+            );
+          })}
         </div>
 
         {/* Grid */}
@@ -81,10 +104,11 @@ export default function Gallery() {
           {filtered.map((g, i) => (
             <Reveal key={g.src + i} delay={(i % 3) * 80} className="mb-5 break-inside-avoid">
               <button
+                type="button"
                 onClick={() => setActive(g)}
-                className="card-hover group block w-full overflow-hidden rounded-2xl border border-white/10"
+                className="card-hover glass-panel group block w-full overflow-hidden rounded-2xl p-1.5 text-left"
               >
-                <div className="relative">
+                <div className="relative overflow-hidden rounded-xl">
                   <img
                     loading="lazy"
                     decoding="async"
@@ -94,10 +118,16 @@ export default function Gallery() {
                     alt={g.title}
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-[#0a0a0b]/85 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  {/* Subtle window frame border */}
+                  <div className="pointer-events-none absolute inset-2.5 rounded-lg border border-white/15 opacity-75 transition-opacity group-hover:border-gold/45" />
+                  <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-[#0a0a0b]/90 via-[#0a0a0b]/25 to-transparent opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100">
                     <div className="p-5 text-left">
-                      <div className="text-xs uppercase tracking-widest text-gold">{g.category}</div>
-                      <div className="mt-1 font-display text-lg font-semibold">{g.title}</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
+                        {g.category}
+                      </div>
+                      <div className="mt-1 font-display text-base font-bold text-white sm:text-lg">
+                        {g.title}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -110,20 +140,36 @@ export default function Gallery() {
       {/* Lightbox */}
       {active && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-5 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.title}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 p-4 backdrop-blur-md sm:p-6"
           onClick={() => setActive(null)}
         >
           <button
-            className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-gold hover:text-gold"
+            type="button"
+            aria-label="Затвори"
+            className="glass-pill absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:border-gold hover:text-gold sm:right-6 sm:top-6"
             onClick={() => setActive(null)}
           >
             <X className="h-5 w-5" />
           </button>
-          <div className="max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <img src={active.src} alt={active.title} className="max-h-[80vh] w-full rounded-xl object-contain" />
-            <div className="mt-4 text-center">
-              <div className="text-xs uppercase tracking-widest text-gold">{active.category}</div>
-              <div className="mt-1 font-display text-xl font-semibold">{active.title}</div>
+          <div
+            className="glass-panel max-w-5xl overflow-hidden rounded-3xl p-3 sm:p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={active.src}
+              alt={active.title}
+              className="max-h-[75vh] w-full rounded-2xl object-contain"
+            />
+            <div className="mt-3 px-2 pb-1 text-center">
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                {active.category}
+              </div>
+              <div className="mt-1 font-display text-lg font-bold text-white sm:text-xl">
+                {active.title}
+              </div>
             </div>
           </div>
         </div>

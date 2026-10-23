@@ -30,7 +30,7 @@ function ScrollToTop() {
 function PublicLayout({ children }) {
   const { editMode } = useContent();
   return (
-    <div className={editMode ? "pt-12" : ""}>
+    <div className={editMode ? "pt-12" : ""} data-edit-mode={editMode ? "true" : "false"}>
       {!editMode && <Navbar />}
       {children}
       <Footer />

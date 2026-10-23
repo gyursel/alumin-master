@@ -1,34 +1,95 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  /* Core architectural palette (preserving existing brand identity) */
   --bg: #0a0a0b;
+  --bg-elevated: #0e0e11;
   --surface: #121214;
   --surface-2: #17171a;
+  --surface-3: #1d1d22;
   --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --aluminum-line: rgba(255, 255, 255, 0.11);
   --text: #f4f4f2;
-  --muted: #a1a1a6;
+  --muted: #a8a8ae;
   --gold: #c9a15a;
   --gold-light: #e2c081;
+  --gold-glow: rgba(201, 161, 90, 0.24);
+
+  /* Typography tokens (Manrope provides full Cyrillic + Latin architectural geometry alongside Sora/Inter) */
+  --font-display: 'Manrope', 'Sora', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Fluid typographic scale */
+  --text-hero: clamp(2.35rem, 4.8vw + 0.9rem, 4.6rem);
+  --text-h1: clamp(2.1rem, 3.8vw + 0.8rem, 3.75rem);
+  --text-h2: clamp(1.75rem, 2.6vw + 0.75rem, 3rem);
+  --text-h3: clamp(1.15rem, 1.1vw + 0.85rem, 1.45rem);
+
+  /* Radii & Spacing */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --section-py: clamp(4.5rem, 7vw, 7rem);
+
+  /* Glassmorphism & Liquid-Glass Surfaces */
+  --glass-bg: rgba(18, 18, 22, 0.74);
+  --glass-bg-dense: rgba(13, 13, 16, 0.88);
+  --glass-bg-fallback: rgba(18, 18, 22, 0.94);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-gold: rgba(201, 161, 90, 0.34);
+  --glass-blur: blur(18px) saturate(145%);
+  --glass-blur-subtle: blur(12px) saturate(130%);
+  --glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --glass-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.78), 0 8px 24px -8px rgba(0, 0, 0, 0.55);
+  --glass-shadow-hover: 0 32px 72px -20px rgba(0, 0, 0, 0.88), 0 0 36px -10px rgba(201, 161, 90, 0.25);
+
+  /* Motion curves */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color-scheme: dark;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
-h1, h2, h3, h4, h5, .font-display {
-  font-family: 'Sora', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 code {
@@ -41,102 +102,394 @@ code {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #0a0a0b; }
-::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #26262b;
+  border-radius: 8px;
+  border: 2px solid #0a0a0b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
 
-/* Utilities */
-.text-gold { color: var(--gold); }
-.bg-gold { background-color: var(--gold); }
-.border-gold { border-color: var(--gold); }
+/* Core color utilities */
+.text-gold {
+  color: var(--gold);
+}
+.bg-gold {
+  background-color: var(--gold);
+}
+.border-gold {
+  border-color: var(--gold);
+}
 
 .text-gradient-gold {
-  background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold) 100%);
+  background: linear-gradient(125deg, #f3dfb6 0%, var(--gold-light) 35%, var(--gold) 75%, #a88038 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fill-gold { fill: var(--gold); }
-.tint-gold { background-color: color-mix(in srgb, var(--gold) 14%, transparent); }
+.fill-gold {
+  fill: var(--gold);
+}
 
+/* Fluid Typography Classes */
+.text-fluid-hero {
+  font-size: var(--text-hero);
+  line-height: 1.04;
+}
+
+.text-fluid-h1 {
+  font-size: var(--text-h1);
+  line-height: 1.08;
+}
+
+.text-fluid-h2 {
+  font-size: var(--text-h2);
+  line-height: 1.12;
+}
+
+.text-fluid-h3 {
+  font-size: var(--text-h3);
+  line-height: 1.25;
+}
+
+.tint-gold {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--gold) 20%, transparent) 0%,
+    color-mix(in srgb, var(--gold) 8%, transparent) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Architectural Eyebrow with precision profile line */
 .section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
   font-size: 0.75rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-light);
   font-weight: 600;
 }
 
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--gold), rgba(201, 161, 90, 0.2));
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Architectural Grid & Mullion Backgrounds (Always pointer-events: none) */
+.arch-grid-bg {
+  position: relative;
+}
+
+.arch-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Smoked & Frosted Glass Surfaces with solid fallback */
+.glass-panel {
+  background: var(--glass-bg-fallback);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+
+.glass-panel-gold {
+  background: linear-gradient(155deg, rgba(28, 24, 18, 0.9) 0%, rgba(14, 14, 18, 0.95) 100%);
+  border: 1px solid var(--glass-border-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(226, 192, 129, 0.22),
+    0 24px 60px -20px rgba(0, 0, 0, 0.82),
+    0 0 40px -12px rgba(201, 161, 90, 0.16);
+}
+
+.glass-nav {
+  background: rgba(10, 10, 12, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 14px 40px -12px rgba(0, 0, 0, 0.75), inset 0 -1px 0 rgba(201, 161, 90, 0.14);
+}
+
+.glass-pill {
+  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px -10px rgba(0, 0, 0, 0.65);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass-panel {
+    background: linear-gradient(160deg, rgba(25, 25, 30, 0.78) 0%, rgba(14, 14, 18, 0.84) 100%);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .glass-panel-gold {
+    background: linear-gradient(155deg, rgba(30, 25, 18, 0.78) 0%, rgba(14, 14, 18, 0.86) 100%);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .glass-nav {
+    background: linear-gradient(180deg, rgba(10, 10, 12, 0.86) 0%, rgba(14, 14, 18, 0.78) 100%);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .glass-pill {
+    background: rgba(18, 18, 22, 0.68);
+    -webkit-backdrop-filter: var(--glass-blur-subtle);
+    backdrop-filter: var(--glass-blur-subtle);
+  }
+}
+
+/* 3D Spatial & Brushed-Aluminum Cards */
+.card-hover {
+  position: relative;
+  background: linear-gradient(165deg, rgba(26, 26, 31, 0.86) 0%, rgba(16, 16, 20, 0.94) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  transition:
+    transform 0.45s var(--ease-out-expo),
+    border-color 0.4s ease,
+    box-shadow 0.45s var(--ease-out-expo);
+  transform-style: preserve-3d;
+}
+
+/* Aluminum specular top edge */
+.card-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(201, 161, 90, 0) 65%,
+    rgba(201, 161, 90, 0.38) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.65;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Warm champagne-gold ambient reflection on hover */
+.card-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 0%),
+    rgba(226, 192, 129, 0.11),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-edit-mode="false"] .card-hover:hover,
+  :not([data-edit-mode="true"]) .card-hover:hover {
+    transform: perspective(1100px) translateY(-6px) rotateX(var(--rx, 1.2deg)) rotateY(var(--ry, -1.2deg));
+    border-color: rgba(201, 161, 90, 0.42);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+  }
+
+  .card-hover:hover::before {
+    opacity: 1;
+  }
+
+  .card-hover:hover::after {
+    opacity: 1;
+  }
+}
+
+.card-hover:active {
+  transform: translateY(-2px) scale(0.995);
+}
+
+/* Architectural Window Frame Accents (Separated from product photos) */
+.arch-frame-corners {
+  position: relative;
+}
+
+.arch-frame-corners::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: calc(var(--radius-lg) - 6px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Tactile Architectural Buttons */
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ead09b 0%, var(--gold-light) 22%, var(--gold) 88%, #b38940 100%);
+  color: #0a0a0b;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 10px 26px -8px color-mix(in srgb, var(--gold) 45%, transparent);
+  transition:
+    transform 0.28s var(--ease-out-expo),
+    box-shadow 0.28s var(--ease-out-expo),
+    filter 0.28s ease;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 16px 36px -8px color-mix(in srgb, var(--gold) 62%, transparent);
+  filter: brightness(1.04);
+}
+
+.btn-gold:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text);
+  font-weight: 500;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.28s var(--ease-out-expo),
+    border-color 0.28s ease,
+    background-color 0.28s ease,
+    color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  background: rgba(201, 161, 90, 0.08);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(226, 192, 129, 0.2), 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+}
+
+.btn-ghost:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* Architectural Form Inputs */
+.arch-input {
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(10, 10, 12, 0.78);
+  color: var(--text);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.arch-input:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.arch-input:focus,
+.arch-input:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(14, 14, 18, 0.95);
+  box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle texture grain */
 .grain::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  opacity: 0.035;
+  opacity: 0.03;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Reveal animation */
+/* Reveal animation (No permanent will-change once visible) */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
 }
+
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+/* In Visual Editor mode, keep all elements immediately visible & stationary for accurate editing */
+[data-edit-mode="true"] .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+[data-edit-mode="true"] .card-hover,
+[data-edit-mode="true"] .card-hover:hover {
+  transform: none !important;
 }
 
 @keyframes floatBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
-.animate-float { animation: floatBob 3s ease-in-out infinite; }
 
-@keyframes shimmerLine {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.animate-float {
+  animation: floatBob 3.2s ease-in-out infinite;
 }
 
 .gold-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 161, 90, 0.55), transparent);
 }
 
-.btn-gold {
-  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
-  color: #0a0a0b;
-  font-weight: 600;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-.btn-gold:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--gold) 50%, transparent);
-  filter: brightness(1.05);
-}
-
-.btn-ghost {
-  border: 1px solid rgba(255,255,255,0.18);
-  color: var(--text);
-  transition: all 0.25s ease;
-}
-.btn-ghost:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  transform: translateY(-2px);
-}
-
-.card-hover {
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
-}
-.card-hover:hover {
-  transform: translateY(-6px);
-  border-color: rgba(201,161,90,0.4);
-  box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8);
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Visual editor styles */
@@ -147,7 +500,7 @@ code {
   cursor: text;
 }
 .editable-text:hover {
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--gold) 40%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--gold) 45%, transparent);
 }
 .editable-text:focus {
   box-shadow: 0 0 0 2px var(--gold);
@@ -156,4 +509,62 @@ code {
 .editable-text:empty::before {
   content: attr(data-placeholder);
   color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   Mobile & Responsive Optimizations (320px+, Portrait & Landscape, iOS Safe)
+   ========================================================================== */
+@media (max-width: 767px) {
+  :root {
+    /* Reduce expensive blur radius on mobile GPUs while keeping smoked-glass look */
+    --glass-blur: blur(10px) saturate(125%);
+    --glass-blur-subtle: blur(8px) saturate(115%);
+  }
+
+  /* Prevent iOS Safari auto-zoom on form focus */
+  input,
+  textarea,
+  select,
+  button[role="combobox"] {
+    font-size: 16px !important;
+  }
+
+  .arch-grid-bg::before {
+    background-size: 44px 44px;
+  }
+}
+
+@media (max-width: 374px) {
+  :root {
+    --text-hero: clamp(1.95rem, 8.5vw, 2.35rem);
+    --text-h1: clamp(1.8rem, 8vw, 2.15rem);
+    --text-h2: clamp(1.5rem, 7vw, 1.85rem);
+  }
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .card-hover:hover,
+  .btn-gold:hover,
+  .btn-ghost:hover {
+    transform: none !important;
+  }
 }
