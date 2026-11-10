@@ -4,8 +4,8 @@
 export const company = {
   name: "Дограма Добрич",
   tagline: "Производство и монтаж",
-  phone: "0899 942 951",
-  phoneHref: "tel:+359899942951",
+  phone: "0899 429 541",
+  phoneHref: "tel:+359899429541",
   manager: "Георги Иванов",
   managerRole: "Управител",
   email: "georgiivanov421@gmail.com",
